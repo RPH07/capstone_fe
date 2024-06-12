@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import PropTypes from 'prop-types';
-import InvitationList from '../Components/InvitationList';
+import InvitationList from '../../Components/Dasboard/InvitationList';
 
 const AccountDashboard = ({ invitations, onDelete, openModal }) => {
   return (
