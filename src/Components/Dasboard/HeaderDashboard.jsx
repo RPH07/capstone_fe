@@ -33,10 +33,11 @@ const DropdownMenu = styled.ul`
   position: absolute;
   top: 40px;
   right: 0;
-  background-color: white;
+  background-color: #c5395b;
+  color: white;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(22, 12, 12, 0.1);
   list-style: none;
   padding: 10px;
   margin: 0;
@@ -50,7 +51,8 @@ const DropdownItem = styled.li`
   padding: 10px;
   cursor: pointer;
   &:hover {
-    background-color: #f0f0f0;
+    background-color: #ddd;
+    color: black;
   }
   & > svg {
     margin-right: 10px;
@@ -101,11 +103,11 @@ const HeaderDashboard = () => {
       <Nav ref={dropdownRef}>
         <UserIcon size={30} onClick={toggleDropdown} />
         <DropdownMenu isOpen={isDropdownOpen}>
-          <DropdownItem onClick={goToProfile}>
-            <FaUser /> Profile
-          </DropdownItem>
           <DropdownItem onClick={goToHome}>
             <FaHome /> Dashboard Home
+          </DropdownItem>
+          <DropdownItem onClick={goToProfile}>
+            <FaUser /> Profile
           </DropdownItem>
           <DropdownItem onClick={handleSignOut}>
             <FaSignOutAlt /> Sign Out
