@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePageRoute from './Routes/HomePageRoute';
-import NavHome from './Components/NavHome';
 import InvitationManager from './Routes/InvitationManager ';
 
 const App = () => {
   return (
     <Router>
-      <NavHome />
-      <HomePageRoute />
-      <InvitationManager />
+      <Routes>
+        <Route path="/*" element={<HomePageRoute />} />
+        <Route path="/dashboard/*" element={<InvitationManager />} />
+      </Routes>
     </Router>
   );
 };

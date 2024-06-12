@@ -85,7 +85,7 @@ return (
                 </div>
 
             <div className="pt-4">
-                <button type="submit" className="w-full py-2 px-4 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"><Link to="/InvitationManager">Register</Link></button>
+                <button type="submit" className="w-full py-2 px-4 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"><Link to="/login">Register</Link></button>
             </div>
 
             <div className="text-center pt-4">

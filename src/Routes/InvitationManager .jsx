@@ -3,13 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom'; // Import Navigate
 import HeaderDashboard from '../Components/Dasboard/HeaderDashboard';
 import InvitationModal from '../Components/Dasboard/InvitationModal';
-import DashboardHome from '../Pages/Dashboard/DashboardHome';
-import AccountDashboard from '../Pages/Dashboard/AccountDashboard';
-import Profile from '../Pages/Dashboard/Profile';
+import DashboardHome from '../pages/Dashboard/DashboardHome';
+import AccountDashboard from '../pages/Dashboard/AccountDashboard';
+import Profile from '../pages/Dashboard/Profile';
 import PropTypes from 'prop-types';
 
 const InvitationManager = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(() => {
+    const storedModalState = localStorage.getItem('isModalOpen');
+    return storedModalState === 'true';
+  });
   const [invitations, setInvitations] = useState(() => {
     const storedInvitations = localStorage.getItem('invitations');
     return storedInvitations ? JSON.parse(storedInvitations) : [];
@@ -18,6 +21,10 @@ const InvitationManager = () => {
   useEffect(() => {
     localStorage.setItem('invitations', JSON.stringify(invitations));
   }, [invitations]);
+
+  useEffect(() => {
+    localStorage.setItem('isModalOpen', isModalOpen.toString());
+  }, [isModalOpen]);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -39,7 +46,7 @@ const InvitationManager = () => {
       <Routes>
         <Route path="dashboard_home" element={<DashboardHome invitations={invitations} />} />
         <Route
-          path="account"
+          path="dashboard_account"
           element={<AccountDashboard
             invitations={invitations}
             onDelete={handleDeleteInvitation}

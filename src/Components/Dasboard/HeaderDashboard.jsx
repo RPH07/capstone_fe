@@ -63,17 +63,18 @@ const HeaderDashboard = () => {
   const dropdownRef = useRef(null);
 
   const goToProfile = () => {
-    navigate('/profile');
+    navigate('/dashboard/profile');
     setIsDropdownOpen(false);
   };
 
   const goToHome = () => {
-    navigate('/dashboard_home');
+    navigate('/dashboard/dashboard_home');
     setIsDropdownOpen(false);
   };
 
   const handleSignOut = () => {
     // Implement your sign out logic here
+    navigate('/home');
     setIsDropdownOpen(false);
   };
 

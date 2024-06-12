@@ -14,7 +14,7 @@ const DashboardHome = ({ invitations }) => {
   const navigate = useNavigate();
 
   const goToAccountDashboard = () => {
-    navigate('/dashboard_account');
+    navigate('/dashboard/dashboard_account');
   };
 
   const sliderSettings = {

@@ -1,12 +1,36 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const InvitationModal = ({ closeModal, onCreate }) => {
-const [invitationType, setInvitationType] = useState('pernikahan');
-const [brideName, setBrideName] = useState('');
-const [groomName, setGroomName] = useState('');
-const [nameOrder, setNameOrder] = useState('groomFirst');
+const [invitationType, setInvitationType] = useState(() => {
+return localStorage.getItem('invitationType') || 'pernikahan';
+});
+const [brideName, setBrideName] = useState(() => {
+return localStorage.getItem('brideName') || '';
+});
+const [groomName, setGroomName] = useState(() => {
+return localStorage.getItem('groomName') || '';
+});
+const [nameOrder, setNameOrder] = useState(() => {
+return localStorage.getItem('nameOrder') || 'groomFirst';
+});
+
+useEffect(() => {
+localStorage.setItem('invitationType', invitationType);
+}, [invitationType]);
+
+useEffect(() => {
+localStorage.setItem('brideName', brideName);
+}, [brideName]);
+
+useEffect(() => {
+localStorage.setItem('groomName', groomName);
+}, [groomName]);
+
+useEffect(() => {
+localStorage.setItem('nameOrder', nameOrder);
+}, [nameOrder]);
 
 const handleSubmit = (e) => {
 e.preventDefault();
@@ -22,6 +46,10 @@ if (!nameRegex.test(brideName) || !nameRegex.test(groomName)) {
 const invitationName = nameOrder === 'groomFirst' ? `${groomName} & ${brideName}` : `${brideName} & ${groomName}`;
 onCreate({ type: invitationType, name: invitationName });
 closeModal();
+localStorage.removeItem('invitationType');
+localStorage.removeItem('brideName');
+localStorage.removeItem('groomName');
+localStorage.removeItem('nameOrder');
 };
 
 return (

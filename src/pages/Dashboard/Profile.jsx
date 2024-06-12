@@ -45,7 +45,7 @@ const Profile = () => {
     alert("Anda telah keluar");
     // Misalnya menghapus token
     localStorage.removeItem('token');
-    navigate('/dashboard_home'); // Arahkan ke halaman utama setelah sign out
+    navigate('/home'); // Arahkan ke halaman utama setelah sign out
   };
 
   return (
