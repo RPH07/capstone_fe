@@ -54,7 +54,7 @@ localStorage.removeItem('nameOrder');
 
 return (
 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
-    <div className="bg-white p-8 rounded-lg w-full max-w-md relative mx-4 sm:mx-auto my-4 max-h-full overflow-y-auto">
+    <div className="bg-white p-8 rounded-lg w-full max-w-md relative mx-4 sm:mx-auto my-4 mt-20 max-h-full overflow-y-auto">
     <button onClick={closeModal} className="absolute top-2 right-2 text-2xl">&times;</button>
     <h2 className="text-xl mb-4">Tambah Undangan Baru</h2>
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">

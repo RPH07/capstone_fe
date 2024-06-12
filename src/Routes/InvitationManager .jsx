@@ -1,62 +1,93 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom'; // Import Navigate
-import HeaderDashboard from '../Components/Dasboard/HeaderDashboard';
-import InvitationModal from '../Components/Dasboard/InvitationModal';
-import DashboardHome from '../pages/Dashboard/DashboardHome';
-import AccountDashboard from '../pages/Dashboard/AccountDashboard';
-import Profile from '../pages/Dashboard/Profile';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import HeaderDashboard from "../Components/Dasboard/HeaderDashboard";
+import InvitationModal from "../Components/Dasboard/InvitationModal";
+import DashboardHome from "../pages/Dashboard/DashboardHome";
+import AccountDashboard from "../pages/Dashboard/AccountDashboard";
+import Profile from "../pages/Dashboard/Profile";
+import DeleteConfirmationModal from "../Components/Dasboard/DeleteConfirmationModal";
+import PropTypes from "prop-types";
 
 const InvitationManager = () => {
   const [isModalOpen, setIsModalOpen] = useState(() => {
-    const storedModalState = localStorage.getItem('isModalOpen');
-    return storedModalState === 'true';
+    const storedModalState = localStorage.getItem("isModalOpen");
+    return storedModalState === "true";
   });
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [invitations, setInvitations] = useState(() => {
-    const storedInvitations = localStorage.getItem('invitations');
+    const storedInvitations = localStorage.getItem("invitations");
     return storedInvitations ? JSON.parse(storedInvitations) : [];
   });
+  const [invitationToDelete, setInvitationToDelete] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem('invitations', JSON.stringify(invitations));
+    localStorage.setItem("invitations", JSON.stringify(invitations));
   }, [invitations]);
 
   useEffect(() => {
-    localStorage.setItem('isModalOpen', isModalOpen.toString());
+    localStorage.setItem("isModalOpen", isModalOpen.toString());
   }, [isModalOpen]);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const openDeleteModal = (invitationId) => {
+    setInvitationToDelete(invitationId);
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setInvitationToDelete(null);
+    setIsDeleteModalOpen(false);
+  };
 
   const handleCreateInvitation = (invitation) => {
     setInvitations([...invitations, { id: Date.now(), ...invitation }]);
     closeModal();
   };
 
-  const handleDeleteInvitation = (invitationId) => {
-    if (window.confirm("Apakah Anda yakin ingin menghapus undangan ini?")) {
-      setInvitations(invitations.filter(invitation => invitation.id !== invitationId));
-    }
+  const handleConfirmDelete = () => {
+    setInvitations(
+      invitations.filter((invitation) => invitation.id !== invitationToDelete)
+    );
+    closeDeleteModal();
   };
 
   return (
     <>
       <HeaderDashboard openModal={openModal} />
       <Routes>
-        <Route path="dashboard_home" element={<DashboardHome invitations={invitations} />} />
+        <Route
+          path="dashboard_home"
+          element={<DashboardHome invitations={invitations} />}
+        />
         <Route
           path="dashboard_account"
-          element={<AccountDashboard
-            invitations={invitations}
-            onDelete={handleDeleteInvitation}
-            openModal={openModal}
-          />}
+          element={
+            <AccountDashboard
+              invitations={invitations}
+              onDelete={openDeleteModal}
+              openModal={openModal}
+            />
+          }
         />
         <Route path="profile" element={<Profile />} />
         <Route path="*" element={<Navigate to="dashboard_home" />} />
       </Routes>
-      {isModalOpen && <InvitationModal closeModal={closeModal} onCreate={handleCreateInvitation} />}
+      {isModalOpen && (
+        <InvitationModal
+          closeModal={closeModal}
+          onCreate={handleCreateInvitation}
+        />
+      )}
+      {isDeleteModalOpen && (
+        <DeleteConfirmationModal
+          isOpen={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </>
   );
 };
